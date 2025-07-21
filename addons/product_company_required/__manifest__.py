@@ -6,9 +6,7 @@
     'summary': 'Obliga a seleccionar empresa al crear productos',
     'author': 'Cristhian Medina',
     'depends': ['product'],
-    'data': [
-        'views/product_template_view.xml',
-    ],
+    'data': [],
     'installable': True,
     'auto_install': False,
     'application': False,

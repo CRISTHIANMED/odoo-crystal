@@ -5,16 +5,12 @@ from odoo.tools.translate import _
 class CrmTeam(models.Model):
     _inherit = 'crm.team'
 
-    company_id = fields.Many2one(
-        'res.company',
-        string='Empresa',
-        required=True,
-    )
+    # Do not redefine company_id field; use constraints and default logic instead
 
     @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
-        if 'company_id' in fields:
+        if 'company_id' in fields and not res.get('company_id'):
             res['company_id'] = self.env.user.company_id.id
         return res
 

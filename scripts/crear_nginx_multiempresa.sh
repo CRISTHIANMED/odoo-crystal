@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ruta de la plantilla Nginx dentro del proyecto
-TEMPLATE="/home/odoo-crystal/odoo-18-docker/nginx_templates/crystalitservice.com"
+TEMPLATE="${NGINX_TEMPLATE_PATH:-./nginx_templates/crystalitservice.com}"
 
 # Solicita el dominio
 read -p "👉 Ingresa el nuevo dominio (ej: empresa1.com): " dominio

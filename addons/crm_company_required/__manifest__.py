@@ -6,9 +6,7 @@
     'category': 'CRM',
     'author': 'Cristhian Medina',
     'depends': ['crm'],
-    'data': [
-        'views/crm_team_views.xml',
-    ],
+    'data': [],
     'installable': True,
     'application': False,
 }
