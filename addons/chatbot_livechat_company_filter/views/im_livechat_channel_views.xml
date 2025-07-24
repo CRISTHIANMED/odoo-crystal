@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_im_livechat_channel_form_company_id" model="ir.ui.view">
+        <field name="name">im.livechat.channel.form.inherit.company_id</field>
+        <field name="model">im_livechat.channel</field>
+        <field name="inherit_id" ref="im_livechat.im_livechat_channel_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insertar debajo del nombre -->
+            <xpath expr="//field[@name='name']" position="after">
+                <group name="company_group" string="Empresa" colspan="2">
+                    <field name="company_id"
+                           string="Empresa"
+                           options="{'no_create': True}"
+                           required="1"
+                           groups="base.group_multi_company"
+                           style="font-size:20px; margin-bottom:30px;" />
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
