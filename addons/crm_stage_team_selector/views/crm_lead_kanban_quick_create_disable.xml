@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Desactiva quick_create del kanban de oportunidades -->
+    <record id="crm_lead_kanban_disable_quick_create" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.disable.quick.create</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" search="[('model','=','crm.lead'), ('type','=','kanban')]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="quick_create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

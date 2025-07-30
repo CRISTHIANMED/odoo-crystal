@@ -1,0 +1,14 @@
+<odoo>
+<!-- Esto hereda la vista de formulario principal de crm.stage de forma segura -->
+<record id="view_crm_stage_form_inherit_team" model="ir.ui.view">
+    <field name="name">crm.stage.form.inherit.team</field>
+    <field name="model">crm.stage</field>
+    <field name="inherit_id" search="[('model','=','crm.stage'),('type','=','form')]"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="after">
+            <field name="team_id" required="1"/>
+        </xpath>
+    </field>
+</record>
+
+</odoo>
