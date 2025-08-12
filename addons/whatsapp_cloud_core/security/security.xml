@@ -1,0 +1,7 @@
+<odoo>
+  <record id="group_whatsapp_admin" model="res.groups">
+    <field name="name">Administrador de WhatsApp</field>
+    <field name="category_id" ref="base.module_category_hidden"/>
+    <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+  </record>
+</odoo>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- =======================
+         VISTAS (definir primero)
+         ======================= -->
+    <!-- LIST -->
+    <record id="view_list_mi_modelo" model="ir.ui.view">
+      <field name="name">mi.modulo.simple.list</field>
+      <field name="model">mi.modulo.simple</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="descripcion"/>
+          <field name="active"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_form_mi_modelo" model="ir.ui.view">
+      <field name="name">mi.modulo.simple.form</field>
+      <field name="model">mi.modulo.simple</field>
+      <field name="arch" type="xml">
+        <form string="Mi Modelo Simple">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="descripcion"/>
+              <field name="active"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- SEARCH -->
+    <record id="view_search_mi_modelo" model="ir.ui.view">
+      <field name="name">mi.modulo.simple.search</field>
+      <field name="model">mi.modulo.simple</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <filter string="Activos" name="active_true" domain="[('active','=',True)]"/>
+        </search>
+      </field>
+    </record>
+
+    <!-- KANBAN -->
+    <record id="view_kanban_mi_modelo" model="ir.ui.view">
+      <field name="name">mi.modulo.simple.kanban</field>
+      <field name="model">mi.modulo.simple</field>
+      <field name="arch" type="xml">
+        <kanban create="1" quick_create="1">
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click o_kanban_card">
+                <strong><field name="name"/></strong>
+                <div t-if="record.descripcion.raw_value">
+                  <field name="descripcion"/>
+                </div>
+                <div class="o_kanban_bottom">
+                  <span>Activo: <field name="active"/></span>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- =======================
+         ACCIONES (varias)
+         ======================= -->
+    <!-- Acción principal: Kanban -> Lista -> Form -->
+    <record id="action_mi_modelo" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Kanban)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">kanban,list,form</field>
+      <field name="views" eval="[
+        (ref('view_kanban_mi_modelo'),'kanban'),
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="context">{'search_default_active_true': 1, 'default_active': True}</field>
+      <field name="help"><![CDATA[
+        <p class="o_view_nocontent_smiling_face">Aún no hay registros.</p>
+        <p>Crea el primero con el botón <b>Nuevo</b>.</p>
+      ]]></field>
+    </record>
+
+    <!-- Solo Lista -->
+    <record id="action_mi_modelo_lista" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Lista)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="context">{'search_default_active_true': 1}</field>
+    </record>
+
+    <!-- Inactivos (lista con domain fijo) -->
+    <record id="action_mi_modelo_inactivos" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Inactivos)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="domain">[('active','=',False)]</field>
+      <field name="context">{}</field>
+    </record>
+
+    <!-- Solo Kanban -->
+    <record id="action_mi_modelo_kanban_solo" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Solo Kanban)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">kanban</field>
+      <field name="views" eval="[(ref('view_kanban_mi_modelo'),'kanban')]"/>
+      <field name="context">{'search_default_active_true': 1}</field>
+    </record>
+
+    <!-- Otras listas -->
+    <record id="action_mi_modelo_todos" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Todos)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="context">{}</field>
+    </record>
+
+    <record id="action_mi_modelo_con_desc" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Con descripción)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="domain">[('descripcion','!=',False)]</field>
+      <field name="context">{}</field>
+    </record>
+
+    <record id="action_mi_modelo_hoy" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Creados hoy)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="domain">[
+        ('create_date','&gt;=', (context_today().strftime('%Y-%m-%d 00:00:00'))),
+        ('create_date','&lt;=', (context_today().strftime('%Y-%m-%d 23:59:59')))
+      ]</field>
+      <field name="context">{}</field>
+    </record>
+
+    <record id="action_mi_modelo_mios" model="ir.actions.act_window">
+      <field name="name">Mi Modelo (Mis registros)</field>
+      <field name="res_model">mi.modulo.simple</field>
+      <field name="view_mode">list,form</field>
+      <field name="views" eval="[
+        (ref('view_list_mi_modelo'),'list'),
+        (ref('view_form_mi_modelo'),'form')
+      ]"/>
+      <field name="domain">[('create_uid','=',uid)]</field>
+      <field name="context">{}</field>
+    </record>
+
+    <!-- =======================
+         MENÚS
+         ======================= -->
+    <!-- App (menú raíz) con icono -->
+    <menuitem id="menu_root_mi_modulo"
+              name="Mi Módulo"
+              sequence="10"
+              web_icon="mi_modulo_test,static/description/icon.png"/>
+
+    <!-- Menú simple directo a la acción principal -->
+    <menuitem id="menu_mi_modelo"
+              name="Registros"
+              parent="menu_root_mi_modulo"
+              action="action_mi_modelo"
+              sequence="10"/>
+
+    <!-- Grupo: Vistas / Variantes -->
+    <menuitem id="menu_variantes"
+              name="Vistas / Variantes"
+              parent="menu_root_mi_modulo"
+              sequence="15"/>
+
+    <menuitem id="menu_mi_modelo_kanban"
+              name="Kanban / Lista"
+              parent="menu_variantes"
+              action="action_mi_modelo"
+              sequence="10"/>
+
+    <menuitem id="menu_mi_modelo_lista"
+              name="Solo Lista"
+              parent="menu_variantes"
+              action="action_mi_modelo_lista"
+              sequence="20"/>
+
+    <menuitem id="menu_mi_modelo_inact"
+              name="Inactivos"
+              parent="menu_variantes"
+              action="action_mi_modelo_inactivos"
+              sequence="30"/>
+
+    <menuitem id="menu_mi_modelo_kanban_solo"
+              name="Solo Kanban"
+              parent="menu_variantes"
+              action="action_mi_modelo_kanban_solo"
+              sequence="40"/>
+
+    <!-- Grupo: Otras listas -->
+    <menuitem id="menu_otras_listas"
+              name="Otras listas"
+              parent="menu_root_mi_modulo"
+              sequence="20"/>
+
+    <menuitem id="menu_mi_modelo_todos"
+              name="Todos"
+              parent="menu_otras_listas"
+              action="action_mi_modelo_todos"
+              sequence="10"/>
+
+    <menuitem id="menu_mi_modelo_con_desc"
+              name="Con descripción"
+              parent="menu_otras_listas"
+              action="action_mi_modelo_con_desc"
+              sequence="20"/>
+
+    <menuitem id="menu_mi_modelo_hoy"
+              name="Creados hoy"
+              parent="menu_otras_listas"
+              action="action_mi_modelo_hoy"
+              sequence="30"/>
+
+    <menuitem id="menu_mi_modelo_mios"
+              name="Mis registros"
+              parent="menu_otras_listas"
+              action="action_mi_modelo_mios"
+              sequence="40"/>
+
+  </data>
+</odoo>

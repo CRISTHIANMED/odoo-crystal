@@ -1,0 +1,49 @@
+<odoo>
+  <!-- LIST en lugar de TREE -->
+  <record id="view_whatsapp_company_list" model="ir.ui.view">
+    <field name="name">res.company.list.whatsapp.core</field>
+    <field name="model">res.company</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="wa_phone_number_id"/>
+        <field name="wa_test_number"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- FORM propio (quita el botón “Guardar”; Odoo ya lo maneja) -->
+  <record id="view_whatsapp_company_form" model="ir.ui.view">
+    <field name="name">res.company.form.whatsapp.core</field>
+    <field name="model">res.company</field>
+    <field name="arch" type="xml">
+      <form string="Configuración WhatsApp por Empresa">
+        <sheet>
+          <group string="Empresa">
+            <field name="name" readonly="1"/>
+          </group>
+          <group string="WhatsApp Cloud">
+            <field name="wa_phone_number_id"/>
+            <field name="wa_access_token" password="1"/>
+            <field name="wa_test_number"/>
+          </group>
+          <footer>
+            <button name="action_wa_test_send" type="object"
+                    string="Enviar mensaje de prueba" class="btn-primary"/>
+            <button special="cancel" string="Cerrar"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Acción usando list,form -->
+  <record id="action_whatsapp_company_config" model="ir.actions.act_window">
+    <field name="name">Configuración por empresa</field>
+    <field name="res_model">res.company</field>
+    <field name="view_mode">list,form</field>
+    <field name="views" eval="[(ref('view_whatsapp_company_list'), 'list'),
+                               (ref('view_whatsapp_company_form'), 'form')]"/>
+    <field name="target">current</field>
+  </record>
+</odoo>

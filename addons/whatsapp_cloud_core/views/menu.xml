@@ -1,0 +1,26 @@
+<odoo>
+  <!-- Raíz como app (sin parent) con acción por defecto -->
+  <menuitem id="menu_whatsapp_root"
+            name="WhatsApp"
+            action="action_whatsapp_company_config"
+            sequence="10"/>
+
+  <menuitem id="menu_whatsapp_company_config"
+            name="Configuración por empresa"
+            parent="menu_whatsapp_root"
+            action="action_whatsapp_company_config"
+            sequence="20"/>
+
+  <record id="action_send_whatsapp_wizard" model="ir.actions.act_window">
+    <field name="name">Enviar WhatsApp</field>
+    <field name="res_model">send.whatsapp.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+  <menuitem id="menu_whatsapp_send"
+            name="Enviar mensaje"
+            parent="menu_whatsapp_root"
+            action="action_send_whatsapp_wizard"
+            sequence="30"/>
+</odoo>
