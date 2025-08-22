@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "Contacts Company Restrict",
     "version": "1.0",
